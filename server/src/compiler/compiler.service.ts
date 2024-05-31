@@ -24,7 +24,12 @@ export class CompilerService {
     const data: CreateCompilerResponseDto = await lastValueFrom(
       this.httpService
         .post(this.url + '/submissions?access_token=' + this.token, submission)
-        .pipe(map((res) => res.data)),
+        .pipe(map((res) => res.data))
+        .pipe(
+          catchError(() => {
+            throw new NotFoundException('Compiler not found');
+          }),
+        ),
     );
     return data;
   }
