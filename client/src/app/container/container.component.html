@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Container</h1>
+  @if (!token) {
+    <input [(ngModel)]="tokenInput" placeholder="Token"/>
+    <button (click)="setToken()">Set Token</button>
+  } @else {
+    <p>Token: {{ token }}</p>
+    <button (click)="clearToken()">Clear Token</button><br/>
+  }
+
+
+  @if (token) {
+    <br /><div>Last Response: {{ lastResponse }}</div><br />
+    <button (click)="testContainers()">Test Containers API</button>
+  }
+</div>
