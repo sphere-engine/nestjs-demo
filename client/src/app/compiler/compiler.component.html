@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>Compilers</h1>
+    <div>
+        <button (click)="goBack()">Back</button>
+        @if (id!=="") {
+            <button (click)="deleteId()">Delete</button>
+        }
+    </div>
+    <div class="row">
+        @if (id === "") {
+            <input [(ngModel)]="idInput" placeholder="id"/>
+            <button type="submit" (click)="setId()">Create compiler</button>
+        }
+        @else {
+            @if (loading) {
+                <div>Loading...</div>
+            }
+            <div class="sec-widget" data-id="example-widget" [attr.data-widget]="id"></div>
+        }
+    </div>
+</div>
