@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 
 declare global {
   interface Window {
@@ -29,13 +29,13 @@ export class ContainerComponent {
   }
 
   public testContainers(): void {
-      const response = fetch(`http://localhost:3000/container/test/${this.token}`, {
-        method: 'GET',
+    const response = fetch(`http://localhost:3000/container/test/${this.token}`, {
+      method: 'GET',
+    });
+    response.then((res) => {
+      res.text().then((text) => {
+        this.lastResponse = text;
       });
-      response.then((res) => {
-        res.text().then((text) => {
-          this.lastResponse = text;
-        });
-      });
+    });
   }
 }
