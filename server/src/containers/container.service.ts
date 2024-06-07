@@ -18,7 +18,7 @@ export class ContainerService {
                 .pipe(map((res) => res.data))
                 .pipe(
                     catchError(() => {
-                        throw new NotFoundException('Container not found');
+                        throw new NotFoundException('Wrong token');
                     }),
                 ),
         );
