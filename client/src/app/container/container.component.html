@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="infoContainer">
+    <button (click)="goBack()" class="back">Back</button>
+    <h1>Containers</h1>
+    <div class="tokenInfo">
+      @if (!token) {
+        <input [(ngModel)]="tokenInput" placeholder="Token"/>&nbsp;
+        <button (click)="setToken()">Set Token</button>
+      } @else {
+        <p>Token: {{ token }}
+          <button (click)="clearToken()">Clear</button>
+        </p>
+      }
+    </div>
+    <div>
+    @if (!workspaceId) {
+      <input [(ngModel)]="workspaceIdInput" placeholder="Workspace ID"/>&nbsp;
+      <button (click)="setWorkspaceId()">Set Workspace ID</button>
+    } @else {
+      <p>Workspace ID: {{ workspaceId }}
+        <button (click)="clearWorkspaceId()">Clear</button>
+      </p>
+    }
+    </div>
+
+
+    <div class="responseContainer">Last Response: <br/>{{ lastResponse }}</div>
+    <br/><button (click)="testContainers()" [disabled]="!token">Test Containers API</button><br/><br/>
+    <input [(ngModel)]="submissionId" placeholder="Submission ID"/>&nbsp;<button (click)="getSubmission()" [disabled]="!token">Get Submission</button>
+
+    <br /><br />
+    <ng-form #form="ngForm">
+      <div class="form-group">
+        <input type="text" class="form-control" id="projectId" name="projectId" placeholder="ProjectID" [(ngModel)]="projectId" required>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="scenario" name="scenario" placeholder="Scenario" [(ngModel)]="scenario" required>
+      </div>
+      <div class="form-group">
+        <input type="file" (change)="onFileSelected($event)" placeholder="Upload file" required>
+      </div>
+      <button (click)="createSubmission()" [disabled]="!form.valid && !token">Create Submission</button>
+    </ng-form>
+  </div>
+  <div class="row">
+    @if (loading && !workspaceId) {
+      <div>Loading...</div>
+    }
+    @if(workspaceId) {
+      <div class="se-container" data-id="example-container" [attr.data-workspace]="workspaceId"></div>
+    }
+  </div>
+</div>

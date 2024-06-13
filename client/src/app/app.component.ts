@@ -16,18 +16,19 @@ export class AppComponent {
     var s = document.createElement('script');
     s.type = 'text/javascript';
     s.text = `SEC_HTTPS = true;
-    SEC_BASE = "compilers.widgets.sphere-engine.com"; 
+    SEC_BASE = "compilers.widgets.sphere-engine.com";
     (function(d, s, id){ SEC = window.SEC || (window.SEC = []);
       var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; 
+      if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
       js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.min.js";
-      fjs.parentNode.insertBefore(js, fjs);   
+      fjs.parentNode.insertBefore(js, fjs);
     }(document, "script", "sphere-engine-compilers-jssdk"));
-    
+
     SEC.ready = function(f) {
       if (document.readyState != "loading" && document.readyState != "interactive") f();
       else window.addEventListener("load", f);
     };`;
+
     this.elementRef.nativeElement.appendChild(s);
   }
 }
