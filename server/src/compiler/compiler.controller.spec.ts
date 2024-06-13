@@ -41,10 +41,16 @@ describe('CompilerController', () => {
       .spyOn(service, 'createSubmission')
       .mockImplementation(() => new Promise((resolve) => resolve(response)));
 
-    const result = await service.createSubmission(createCompilerDto);
+    const result = await service.createSubmission(
+      createCompilerDto,
+      'fakeToken',
+    );
 
     expect(service.createSubmission).toHaveBeenCalled();
-    expect(service.createSubmission).toHaveBeenCalledWith(createCompilerDto);
+    expect(service.createSubmission).toHaveBeenCalledWith(
+      createCompilerDto,
+      'fakeToken',
+    );
 
     expect(result).toEqual(response);
   });
@@ -63,9 +69,12 @@ describe('CompilerController', () => {
       .spyOn(service, 'getSubmission')
       .mockImplementation(() => new Promise((resolve) => resolve(submission)));
 
-    const result = await controller.getSubmission(submissionId);
+    const result = await controller.getSubmission(submissionId, 'fakeToken');
 
-    expect(service.getSubmission).toHaveBeenCalledWith(submissionId);
+    expect(service.getSubmission).toHaveBeenCalledWith(
+      submissionId,
+      'fakeToken',
+    );
     expect(result).toEqual(submission);
   });
 });

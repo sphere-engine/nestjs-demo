@@ -3,6 +3,7 @@ import { CompilerService } from './compiler.service';
 import {
   CreateCompilerDto,
   CreateCompilerResponseDto,
+  GetCompilerDto,
 } from './dto/compiler.dto';
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { throwError } from 'rxjs';
@@ -40,11 +41,37 @@ describe('CompilerService', () => {
       .spyOn(service, 'createSubmission')
       .mockImplementation(() => new Promise((resolve) => resolve(response)));
 
-    const result = await service.createSubmission(createCompilerDto);
+    const result = await service.createSubmission(
+      createCompilerDto,
+      'fakeToken',
+    );
 
     expect(service.createSubmission).toHaveBeenCalled();
-    expect(service.createSubmission).toHaveBeenCalledWith(createCompilerDto);
+    expect(service.createSubmission).toHaveBeenCalledWith(
+      createCompilerDto,
+      'fakeToken',
+    );
 
+    expect(result).toEqual(response);
+  });
+
+  it('getSubmission => should return promise with object', async () => {
+    const id: string = '1';
+    const response: GetCompilerDto = {
+      id: 1,
+      executing: false,
+      date: '02.12.2022',
+      compiler: null,
+      result: null,
+    };
+
+    jest
+      .spyOn(service, 'getSubmission')
+      .mockImplementation(() => new Promise((resolve) => resolve(response)));
+
+    const result = await service.getSubmission(id, 'fakeToken');
+
+    expect(service.getSubmission).toHaveBeenCalledWith(id, 'fakeToken');
     expect(result).toEqual(response);
   });
 
@@ -58,9 +85,9 @@ describe('CompilerService', () => {
       .spyOn(httpService, 'post')
       .mockReturnValueOnce(throwError(() => new Error('Error')));
 
-    await expect(service.createSubmission(createCompilerDto)).rejects.toThrow(
-      NotFoundException,
-    );
+    await expect(
+      service.createSubmission(createCompilerDto, 'fakeToken'),
+    ).rejects.toThrow(NotFoundException);
   });
 
   it('getSubmission => should throw NotFoundException', async () => {
@@ -70,6 +97,8 @@ describe('CompilerService', () => {
       .spyOn(httpService, 'get')
       .mockReturnValueOnce(throwError(() => new Error('Error')));
 
-    await expect(service.getSubmission(id)).rejects.toThrow(NotFoundException);
+    await expect(service.getSubmission(id, 'fakeToken')).rejects.toThrow(
+      NotFoundException,
+    );
   });
 });
