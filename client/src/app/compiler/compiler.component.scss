@@ -4,4 +4,25 @@
     .row {
         height: 80%;
     }
+
+    .title {
+        font-size: 22px;
+    }
+
+    .getter, .create-compiler {
+        margin: 12px 0;
+
+        .getter-row, .create-row {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
+    .text-area {
+        width: fit-content;
+        height: fit-content;
+        border: 1px solid black;
+        border-radius: 25px;
+        padding: 10px;
+    }
 }

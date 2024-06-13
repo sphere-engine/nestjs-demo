@@ -3,7 +3,52 @@
     <div>
         <button (click)="goBack()">Back</button>
         @if (id!=="") {
-            <button (click)="deleteId()">Delete</button>
+            <button (click)="deleteId()">Delete compiler</button>
+        }
+    </div>
+    <div class="getter">
+        <div class="title">Get Compiler</div>
+        <div class="getter-row">
+            <div>
+                <input [(ngModel)]="submissionId" placeholder="submission id..." />
+            </div>
+            <div>
+                <input [(ngModel)]="token" placeholder="access token..." />
+            </div>
+            <button type="submit" (click)="getSubmission()" [disabled]="token ==='' || submissionId === ''">Get compiler</button>
+        </div>
+        @if (getResponse !== ''){
+            <div>
+                <div>Response:</div>
+                <div><button (click)="clear(0)">Clear response</button></div>
+            </div>
+            <pre class="text-area">
+                {{getResponse}}
+            </pre>
+        }
+    </div>
+    <div class="create-compiler">
+        <div class="title">Create Compiler</div>
+        <div class="create-row">
+            <div>
+                <input [(ngModel)]="compilerId" placeholder="compiler id..." />
+            </div>
+            <div>
+                <input [(ngModel)]="source" placeholder="source code..." />
+            </div>
+            <div>
+                <input [(ngModel)]="token" placeholder="access token..." />
+            </div>
+            <button type="submit" (click)="createSubmission()" [disabled]="token==='' || source ==='' || compilerId === ''">Create compiler</button>
+        </div>
+        @if (createResponse !== ''){
+            <div>
+                <div>Response:</div>
+                <div><button (click)="clear(1)">Clear response</button></div>
+            </div>
+            <pre class="text-area">
+                {{createResponse}}
+            </pre>
         }
     </div>
     <div class="row">
