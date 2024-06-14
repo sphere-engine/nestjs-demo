@@ -1,0 +1,22 @@
+.messageContainer {
+    width: 90%;
+    padding: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    overflow: auto;
+    max-width: 400px;
+  }
+
+  .row {
+    height: 100%;
+    width: 77%;
+}
+
+.problemContainer {
+    height: 96vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100wh;
+  }
+  

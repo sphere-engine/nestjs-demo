@@ -1,0 +1,37 @@
+<div class="problemContainer">
+    <div>
+        <button (click)="goBack()" class="back">Back</button>
+        <h1>Problems</h1>
+        <div class="tokenContainer">
+            @if (!accessToken) {
+              <input [(ngModel)]="tokenInput" placeholder="Token"/>&nbsp;
+              <button (click)="setToken()">Set Token</button>
+            } @else {
+              <p>Token: {{ accessToken }}
+                <button (click)="clearToken()">Clear</button>
+              </p>
+            }
+        </div>
+        <div>
+            @if (!problemId) {
+              <input [(ngModel)]="problemIdInput" placeholder="Problem ID"/>&nbsp;
+              <button (click)="setProblemId()">Set Problem ID</button>
+            } @else {
+              <p>Problem ID: {{ problemId }}
+                <button (click)="clearProblemId()">Clear</button>
+              </p>
+            }
+        </div>
+        <div class="messageContainer">Last Message: <br/>{{ message }}</div>
+        <br/><button (click)="testProblems()" [disabled]="!accessToken">Test Problems API</button><br/><br/>
+        <input [(ngModel)]="submissionId" placeholder="Submission ID"/>&nbsp;<button (click)="getSubmission()" [disabled]="!accessToken">Get Submission</button>
+    </div>
+    <div class="row">
+        @if (loading && !problemId) {
+          <div>Loading...</div>
+        }
+        @if(problemId) {
+            <div class="se-widget" data-id="example-widget" [attr.data-widget]="problemId"></div>
+        }
+      </div>
+</div>
