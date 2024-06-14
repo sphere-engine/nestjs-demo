@@ -18,5 +18,16 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100wh;
+
+    .title {
+      font-size: 22px;
+      margin: 15px 0;
+    }
+
+    .response {
+      font-size: 18px;
+      margin: 5px 0;
+    }
   }
+  
   
