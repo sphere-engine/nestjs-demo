@@ -12,6 +12,7 @@
               </p>
             }
         </div>
+        <div class="title">Create Problem Widget</div>
         <div>
             @if (!problemId) {
               <input [(ngModel)]="problemIdInput" placeholder="Problem ID"/>&nbsp;
@@ -22,9 +23,45 @@
               </p>
             }
         </div>
-        <div class="messageContainer">Last Message: <br/>{{ message }}</div>
+        @if (message !== ''){
+            <div>
+                <div class="response">Response:</div>
+                <div><button (click)="clear(0)">Clear response</button></div>
+            </div>
+            <div class="messageContainer"><br/>{{ message }}</div>
+        }
         <br/><button (click)="testProblems()" [disabled]="!accessToken">Test Problems API</button><br/><br/>
+
+        <div class="title">Get Problem Submission</div>
+        @if (getMessage !== ''){
+            <div>
+                <div class="response">Response:</div>
+                <div><button (click)="clear(1)">Clear response</button></div>
+            </div>
+            <div class="messageContainer"><br/>{{ getMessage }}</div>
+        }
         <input [(ngModel)]="submissionId" placeholder="Submission ID"/>&nbsp;<button (click)="getSubmission()" [disabled]="!accessToken">Get Submission</button>
+
+        <div class="title">Create Problem Submission</div>
+        @if (createMessage !== ''){
+            <div>
+                <div class="response">Response:</div>
+                <div><button (click)="clear(2)">Clear response</button></div>
+            </div>
+            <div class="messageContainer"><br/>{{ createMessage }}</div>
+        }
+        <div class="create-row">
+            <div>
+                <input [(ngModel)]="problemSubmissionId" placeholder="problem id..." />
+            </div>
+            <div>
+                <input [(ngModel)]="compilerId" placeholder="compiler id..." />
+            </div>
+            <div>
+                <input [(ngModel)]="source" placeholder="source code..." />
+            </div>
+            <button type="submit" (click)="createSubmission()" [disabled]="!accessToken || source === '' || compilerId === '' || problemSubmissionId === ''">Create Submission</button>
+        </div>
     </div>
     <div class="row">
         @if (loading && !problemId) {

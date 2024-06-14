@@ -1,6 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { Location } from "@angular/common";
 import { FormsModule } from '@angular/forms';
+import { CrudService } from '../service/crud.service';
 
 declare global {
   interface Window {
@@ -18,16 +19,21 @@ declare global {
 })
 export class ProblemComponent {
 
-  public accessToken: string = '';
-  public tokenInput: string = '';
-  public problemId: string = '';
-  public problemIdInput: string = '';
-  public loading: boolean = false;
+  protected accessToken: string = '';
+  protected tokenInput: string = '';
+  protected problemId: string = '';
+  protected problemIdInput: string = '';
+  protected loading: boolean = false;
   private widget: any;
-  public message: string = '';
-  public submissionId: string = '';
+  protected message: string = '';
+  protected submissionId: string = '';
+  protected getMessage: string = '';
+  protected createMessage: string = '';
+  protected source: string = '';
+  protected compilerId: string = '';
+  protected problemSubmissionId: string = '';
 
-  public constructor(private elementRef: ElementRef, private readonly location: Location) {
+  public constructor(private elementRef: ElementRef, private readonly location: Location, private readonly crudService: CrudService) {
   }
 
   public ngAfterViewInit() {
@@ -102,16 +108,46 @@ export class ProblemComponent {
   }
 
   public getSubmission(): void {
-    const response = fetch(`http://localhost:3000/problem/${this.submissionId}/${this.accessToken}`, {
-      method: 'GET',
+    this.getMessage = '';
+    this.crudService.getProblem(this.submissionId, this.accessToken).subscribe({
+      next: (val) => {
+        this.getMessage = JSON.stringify(val, null, 2);
+        console.log(this.getMessage);
+      },
+      error: (error) => {
+        this.getMessage = error.error.message;
+      },
     });
-    response.then((res) => {
-      res.text().then((text) => {
-        this.message = text;
-      });
-    });
-
-    this.submissionId = '';
   }
 
+  public createSubmission(): void {
+    this.createMessage = '';
+    this.crudService
+      .createProblem(
+        { problemId: this.problemSubmissionId, source: this.source, compilerId: this.compilerId },
+        this.accessToken
+      )
+      .subscribe({
+        next: (val) => {
+          this.createMessage = JSON.stringify(val, null, 2);
+        },
+        error: (error) => {
+          this.createMessage = error.error.message;
+        },
+      });
+  }
+
+  public clear(opt: number): void {
+    switch (opt) {
+      case 0:
+        this.message = '';
+        break;
+      case 1:
+        this.getMessage = '';
+        break;
+      case 2:
+        this.createMessage = '';
+        break;
+    }
+  }
 }
